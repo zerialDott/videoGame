@@ -4,9 +4,9 @@ Curso practico crea tu primer videojuego de JavaScript
 
 ## Descripción general
 Este se divide en 3 archivos:
-    * game.js
-    * maps.js
-    * index.html
+    *game.js.
+    *maps.js.
+    *index.html.
 **Nota** Tambien hay un archivo de *styles.css* en el que se estilizan los emojis.
 
 ### Archvo game.js
