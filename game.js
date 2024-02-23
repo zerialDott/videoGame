@@ -1,39 +1,28 @@
-const canvas = document.getElementById('game');
-const game = canvas.getContext('2d');
-let canvasSize;
+const canvas = document.getElementById('game')
+const ctx = canvas.getContext("2d")
+let canvasSize
 
-const minCanvasSize = 480;
+window.addEventListener('load',handleLoad)
+window.addEventListener('resize', handleLoad)
 
-window.addEventListener('load', () => {
-    handleResize();
-});
-window.addEventListener('resize', () => {
-    handleResize();
-});
-
-function getCanvasSize(width, height, resolution) {
-    const size = Math.min(Math.floor(width * resolution), Math.floor(height * resolution));
-    return size;
-}
-
-function handleResize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvasSize = getCanvasSize(width, height, 0.7);
-
+function handleLoad() {
+    reSize()
     startGame()
 }
+function reSize() {
+    const width = window.innerWidth
+    const height = window.innerHeight
+    const newCanvasSize = height > width ? width*0.8: height*0.8
 
-function startGame() {
-    const elementSize = (canvasSize / 10) - 0.5;
-    console.log({ elementSize, canvasSize });
-
-// Ensure emojis is defined with the symbol "X"
-    const symbol = emojis['X'] || 'X'; // Use default if undefined
-
-    game.textAlign = 'start';
-    for (let i = 0; i <= 10; i++) {
-    game.font = elementSize + 'px Verdana';
-    game.fillText(symbol, elementSize * i, elementSize);
+    canvas.width = canvas.height = newCanvasSize
+    canvasSize = Math.floor(newCanvasSize)
 }
+function startGame() {
+    const emojiSize = Math.floor(canvasSize/10)
+    console.log({emojiSize,canvasSize});
+    ctx.font =emojiSize + 'px Verdana'
+    for (let i = 0; i < 10; i++) {
+        ctx.textAlign ='start'
+        ctx.fillText(emojis['X'],emojiSize*i,emojiSize)
+    }
 }
