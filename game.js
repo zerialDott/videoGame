@@ -17,12 +17,20 @@ function reSize() {
     canvas.width = canvas.height = newCanvasSize
     canvasSize = Math.floor(newCanvasSize)
 }
+// Map[Row['Col']]
 function startGame() {
-    const emojiSize = Math.floor(canvasSize/10)
+    const emojiSize = Math.floor((canvasSize/10)-1)
+    const map = maps[3]
+    const createMapRow = map.trim().split('\n')
+    const mapRow = createMapRow.map(a=>a.trim().split(''))
+    ctx.textAlign ='center'
     console.log({emojiSize,canvasSize});
     ctx.font =emojiSize + 'px Verdana'
-    for (let i = 0; i < 10; i++) {
-        ctx.textAlign ='start'
-        ctx.fillText(emojis['X'],emojiSize*i,emojiSize)
+    for (let row = 0; row < 10; row++) {
+        for (let col = 1; col <= 10; col++) {
+            const x = Math.floor((emojiSize*col)-5)
+            const y = Math.floor((emojiSize*row)+35)
+            ctx.fillText(emojis[mapRow[row][col-1]],x,y)
+        }
     }
 }
