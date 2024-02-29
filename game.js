@@ -35,6 +35,7 @@ function startGame() {
             const set = emojis[mapRows[i][j-1]]
             ctx.fillText(set,posX,posY)
             console.log({posX,posY,set});
+            // lala
         }
     }
 }
