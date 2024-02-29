@@ -1,5 +1,6 @@
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
+// Los botones
 let canvasSize
 
 window.addEventListener('resize',handleGame)
@@ -30,6 +31,7 @@ function startGame() {
     mapRows.forEach((row,rowIndex) => {
         row.forEach((col,colIndex)=>{
             const frameEmojis = emojis[col]
+            // const posX = (elementSize * (colIndex + 1))
             const posX = (elementSize * colIndex)
             const posY = (elementSize * rowIndex)+elementSize
             ctx.fillText(frameEmojis,posX,posY)
@@ -46,4 +48,58 @@ function startGame() {
     //         console.log({posX,posY,set});
     //     }
     // }
+}
+// movimiento de los botones
+document.addEventListener('keydown',movePlayer)
+document.addEventListener('DOMContentLoaded',()=>{
+const buttons = document.querySelectorAll('.btns button')
+    buttons.forEach(button=>{
+    button.addEventListener('click',(event)=>{
+        movePlayerButton(button.id)
+    })
+})
+})
+function movePlayer(event) {
+    const keyP = event.key.toLowerCase()
+
+    switch (keyP) {
+        case 'arrowup':
+        case 'w':
+            console.log('arriba');
+            break;
+        case 'arrowdown':
+        case 's':
+            console.log('abajo');
+            break;
+        case 'arrowleft':
+        case 'a':
+            console.log('izquierda');
+            break;
+        case 'arrowright':
+        case 'd':
+            console.log('derecha');
+            break;
+        default:
+            break;
+    }
+}
+function movePlayerButton(direction) {
+    const move = direction.toLowerCase()
+    switch (move) {
+        case 'up':
+            console.log('arriba');
+            break;
+        case 'down':
+            console.log('abajo');
+            break;
+        case 'right':
+            console.log('derecha');
+            break;
+        case 'left':
+            console.log('izquierda');
+            break;
+    
+        default:
+            break;
+    }
 }
