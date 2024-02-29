@@ -1,36 +1,49 @@
 const canvas = document.getElementById('game')
-const ctx = canvas.getContext("2d")
+const ctx = canvas.getContext('2d')
 let canvasSize
 
-window.addEventListener('load',handleLoad)
-window.addEventListener('resize', handleLoad)
+window.addEventListener('resize',handleGame)
+window.addEventListener('load',handleGame)
+function reSize() {
+    const reWidth = window.innerWidth
+    const reHeight = window.innerHeight
 
-function handleLoad() {
+    let setCanvasSize = reHeight < reWidth ? reHeight *0.8 : reWidth*0.8
+    setCanvasSize = Math.ceil(setCanvasSize)
+
+    canvas.width = canvas.height = setCanvasSize 
+    canvasSize = setCanvasSize
+}
+function handleGame() {
     reSize()
     startGame()
 }
-function reSize() {
-    const width = window.innerWidth
-    const height = window.innerHeight
-    const newCanvasSize = height > width ? width*0.8: height*0.8
-
-    canvas.width = canvas.height = newCanvasSize
-    canvasSize = Math.floor(newCanvasSize)
-}
-// Map[Row['Col']]
 function startGame() {
-    const emojiSize = Math.floor((canvasSize/10)-1)
-    const map = maps[3]
-    const createMapRow = map.trim().split('\n')
-    const mapRow = createMapRow.map(a=>a.trim().split(''))
-    ctx.textAlign ='center'
-    console.log({emojiSize,canvasSize});
-    ctx.font =emojiSize + 'px Verdana'
-    for (let row = 0; row < 10; row++) {
-        for (let col = 1; col <= 10; col++) {
-            const x = Math.floor((emojiSize*col)-5)
-            const y = Math.floor((emojiSize*row)+35)
-            ctx.fillText(emojis[mapRow[row][col-1]],x,y)
-        }
-    }
+    const elementSize = Math.floor((canvasSize/10))
+    
+    // ctx.textAling='end'
+    const generalMap = maps[0]
+    const separatedMap = generalMap.trim().split('\n')
+    const mapRows = separatedMap.map(a=> a.trim().split(''))
+    ctx.textAlign = 'start'
+    ctx.font = elementSize + 'px Verdana'
+    mapRows.forEach((row,rowIndex) => {
+        row.forEach((col,colIndex)=>{
+            const frameEmojis = emojis[col]
+            const posX = (elementSize * colIndex)
+            const posY = (elementSize * rowIndex)+elementSize
+            ctx.fillText(frameEmojis,posX,posY)
+        })        
+    });
+
+    // for (let i = 0; i < 10; i++) {
+    //     for (let j = 1; j <=10; j++) {
+    //         // ctx.fillText(emojis['X'],0,0)
+    //         const posX = ((elementSize* j)-elementSize)
+    //         const posY = ((elementSize* i)+elementSize)
+    //         const set = emojis[mapRows[i][j-1]]
+    //         ctx.fillText(set,posX,posY)
+    //         console.log({posX,posY,set});
+    //     }
+    // }
 }
