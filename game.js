@@ -1,5 +1,9 @@
 const canvas = document.getElementById('game')
 const ctx = canvas.getContext('2d')
+const btnUp = document.querySelector('#Up')
+const btnRight = document.querySelector('#Right')
+const btnLeft = document.querySelector('#Left')
+const btnDown = document.querySelector('#Down')
 // Los botones
 let canvasSize
 
@@ -50,56 +54,80 @@ function startGame() {
     // }
 }
 // movimiento de los botones
-document.addEventListener('keydown',movePlayer)
-document.addEventListener('DOMContentLoaded',()=>{
-const buttons = document.querySelectorAll('.btns button')
-    buttons.forEach(button=>{
-    button.addEventListener('click',(event)=>{
-        movePlayerButton(button.id)
-    })
-})
-})
-function movePlayer(event) {
-    const keyP = event.key.toLowerCase()
+// document.addEventListener('keydown',movePlayer)
+// document.addEventListener('DOMContentLoaded',()=>{
+// const buttons = document.querySelectorAll('.btns button')
+//     buttons.forEach(button=>{
+//     button.addEventListener('click',(event)=>{
+//         movePlayerButton(button.id)
+//     })
+// })
+// })
+// function movePlayer(event) {
+//     const keyP = event.key.toLowerCase()
 
-    switch (keyP) {
-        case 'arrowup':
-        case 'w':
-            console.log('arriba');
-            break;
-        case 'arrowdown':
-        case 's':
-            console.log('abajo');
-            break;
-        case 'arrowleft':
-        case 'a':
-            console.log('izquierda');
-            break;
-        case 'arrowright':
-        case 'd':
-            console.log('derecha');
-            break;
-        default:
-            break;
-    }
-}
-function movePlayerButton(direction) {
-    const move = direction.toLowerCase()
-    switch (move) {
-        case 'up':
-            console.log('arriba');
-            break;
-        case 'down':
-            console.log('abajo');
-            break;
-        case 'right':
-            console.log('derecha');
-            break;
-        case 'left':
-            console.log('izquierda');
-            break;
+//     switch (keyP) {
+//         case 'arrowup':
+//         case 'w':
+//             console.log('arriba');
+//             break;
+//         case 'arrowdown':
+//         case 's':
+//             console.log('abajo');
+//             break;
+//         case 'arrowleft':
+//         case 'a':
+//             console.log('izquierda');
+//             break;
+//         case 'arrowright':
+//         case 'd':
+//             console.log('derecha');
+//             break;
+//         default:
+//             break;
+//     }
+// }
+// function movePlayerButton(direction) {
+//     const move = direction.toLowerCase()
+//     switch (move) {
+//         case 'up':
+//             console.log('arriba');
+//             break;
+//         case 'down':
+//             console.log('abajo');
+//             break;
+//         case 'right':
+//             console.log('derecha');
+//             break;
+//         case 'left':
+//             console.log('izquierda');
+//             break;
     
-        default:
-            break;
-    }
+//         default:
+//             break;
+//     }
+// }
+
+
+// Mover usando funciones escuchadoras
+window.addEventListener('keydown',moveByKey)
+btnUp.addEventListener('click',moveUp)
+btnRight.addEventListener('click',moveRight)
+btnLeft.addEventListener('click',moveLeft)
+btnDown.addEventListener('click',moveDown)
+
+function moveByKey(event) {
+    console.log(event);
+}
+function moveUp() {
+    console.log('Arriba');
+}
+function moveRight() {
+    console.log('Derecha');
+}
+function moveLeft() {
+    console.log('Izquierda');
+}
+function moveDown() {
+    console.log('Abajo');
 }
