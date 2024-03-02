@@ -12,6 +12,8 @@ let playerPosition = {x:undefined,y:undefined}
 let giftPostion = {x:undefined, y:undefined}
 let enemyPosition = []
 
+let level = 0
+let lives = 3
 
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -24,16 +26,25 @@ function reSize() {
 
     canvas.width = canvas.height = setCanvasSize 
     canvasSize = setCanvasSize
+    if (playerPosition.x !==undefined && playerPosition.y !== undefined) {
+        playerPosition.x = Math.floor((elementSize * Math.floor(playerPosition.x / elementSize)))
+        playerPosition.y = Math.floor((elementSize * Math.floor(playerPosition.y / elementSize)))
+    }
 }
 function handleGame() {
     reSize()
     startGame()
 }
 function startGame() {
-    elementSize = Math.floor((canvasSize/10))
+    elementSize = Math.floor((canvasSize/10)) 
     // ctx.clearRect(0, 0, canvas.width, canvas.height);
     // ctx.textAling='end'
-    const generalMap = maps[3]
+    const generalMap = maps[level]
+    
+    if (!generalMap) {
+        finish()
+        return
+    }
     const separatedMap = generalMap.trim().split('\n')
     const mapRows = separatedMap.map(a=> a.trim().split(''))
     ctx.textAlign = 'start'
@@ -194,13 +205,43 @@ function moveDown() {
     
 }
 function movePlayer() {
-    const colisionX = playerPosition.x == giftPostion.x
-    const colisionY = playerPosition.y == giftPostion.y
-    const giftColision = colisionX && colisionY
+// Condicional de la posición para poder ganar
+    const collisionX = playerPosition.x == giftPostion.x
+    const collisionY = playerPosition.y == giftPostion.y
+    const giftCollision = collisionX && collisionY
     
-    if (giftColision) {
-        console.log('Level Up');       
+    if (giftCollision) {
+        levelUp()     
     }
+// Validación de collision contra las bombas
+
+    const enemyCollision = enemyPosition.find(enemy=>{
+        const setColX = enemy.x == playerPosition.x
+        const setColY =enemy.y == playerPosition.y
+        return setColX && setColY;
+    }) 
+    if (enemyCollision) {
+        levelFail()
+    }
+    // Render del jugador :) 
     ctx.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y)
     
+}
+function levelUp() {
+    console.log('level Up');
+    level ++;
+    startGame()
+}
+function levelFail() {
+    lives --
+    if (lives <= 0) {
+        level = 0
+        lives = 3
+    }
+    playerPosition.x = undefined
+    playerPosition.y = undefined
+    startGame()
+}
+function finish() {
+    console.log('Ganaste el juego');   
 }

@@ -41,10 +41,13 @@ button {
   padding: 5px 20px;
   width: 100px;
 }
-#up{
+
+#Up{
   background-color: #22ff00;
   color: black;
+  font-weight: 600;
 }
+
 button:not(:last-child) {
   margin-right: 10px;
 }
