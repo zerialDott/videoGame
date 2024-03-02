@@ -8,6 +8,10 @@ const btnDown = document.querySelector('#Down')
 
 let elementSize
 let playerPosition = {x:undefined,y:undefined}
+// hitbox del regalo
+let giftPostion = {x:undefined, y:undefined}
+let enemyPosition = []
+
 
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -29,11 +33,13 @@ function startGame() {
     elementSize = Math.floor((canvasSize/10))
     // ctx.clearRect(0, 0, canvas.width, canvas.height);
     // ctx.textAling='end'
-    const generalMap = maps[0]
+    const generalMap = maps[3]
     const separatedMap = generalMap.trim().split('\n')
     const mapRows = separatedMap.map(a=> a.trim().split(''))
     ctx.textAlign = 'start'
     ctx.font = elementSize + 'px Verdana'
+
+    enemyPosition = []
 
     ctx.clearRect(0,0,canvasSize,canvasSize)
     mapRows.forEach((row,rowIndex) => {
@@ -47,6 +53,14 @@ function startGame() {
                     playerPosition.x = posX
                     playerPosition.y = posY   
                 }
+            }else if (col == 'I') {
+                giftPostion.x = posX
+                giftPostion.y = posY                        
+            }else if (col== 'X') {
+                enemyPosition.push({
+                    x:posX,
+                    y:posY,
+                })
             }
             ctx.fillText(frameEmojis,posX,posY)
         })        
@@ -155,40 +169,38 @@ function moveByKey(event) {
 }
 function moveUp() {
     if ((playerPosition.y - elementSize) < elementSize) {
-        console.log('OUT'); 
     } else 
     playerPosition.y -= elementSize
-    console.log('Arriba');
-    console.log({playerPosition});
     startGame();   
 
 }
 function moveRight() {
     if (playerPosition.x + elementSize < canvasSize -elementSize) {
         playerPosition.x += elementSize
-        console.log('Derecha');
-        console.log({playerPosition});
         startGame()   
     }
 }
 function moveLeft() {
     if (playerPosition.x - elementSize >= 0) {
         playerPosition.x -= elementSize
-        console.log('Izquierda');
-        console.log({playerPosition});
         startGame()   
-    }else console.log('no se cumple');
+    }
 }
 function moveDown() {
     if (playerPosition.y + elementSize < canvasSize) {
         playerPosition.y += elementSize 
-        console.log('Abajo');
-        console.log({playerPosition,canvasSize});
         startGame()
-    }else console.log('no se cumple');
+    }
     
 }
 function movePlayer() {
+    const colisionX = playerPosition.x == giftPostion.x
+    const colisionY = playerPosition.y == giftPostion.y
+    const giftColision = colisionX && colisionY
+    
+    if (giftColision) {
+        console.log('Level Up');       
+    }
     ctx.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y)
-    // console.log({playerPosition});
+    
 }
