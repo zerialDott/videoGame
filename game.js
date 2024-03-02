@@ -5,7 +5,9 @@ const btnRight = document.querySelector('#Right')
 const btnLeft = document.querySelector('#Left')
 const btnDown = document.querySelector('#Down')
 // Los botones
-let canvasSize
+
+let elementSize
+let playerPosition = {x:undefined,y:undefined}
 
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -24,23 +26,34 @@ function handleGame() {
     startGame()
 }
 function startGame() {
-    const elementSize = Math.floor((canvasSize/10))
-    
+    elementSize = Math.floor((canvasSize/10))
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
     // ctx.textAling='end'
     const generalMap = maps[0]
     const separatedMap = generalMap.trim().split('\n')
     const mapRows = separatedMap.map(a=> a.trim().split(''))
     ctx.textAlign = 'start'
     ctx.font = elementSize + 'px Verdana'
+
+    ctx.clearRect(0,0,canvasSize,canvasSize)
     mapRows.forEach((row,rowIndex) => {
         row.forEach((col,colIndex)=>{
             const frameEmojis = emojis[col]
             // const posX = (elementSize * (colIndex + 1))
             const posX = (elementSize * colIndex)
             const posY = (elementSize * rowIndex)+elementSize
+            if (col == 'O') {
+                if (!playerPosition.x && !playerPosition.y) {
+                    playerPosition.x = posX
+                    playerPosition.y = posY   
+                }
+            }
             ctx.fillText(frameEmojis,posX,posY)
         })        
     });
+
+    ctx.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y)
+    movePlayer();
 
     // for (let i = 0; i < 10; i++) {
     //     for (let j = 1; j <=10; j++) {
@@ -117,17 +130,65 @@ btnLeft.addEventListener('click',moveLeft)
 btnDown.addEventListener('click',moveDown)
 
 function moveByKey(event) {
-    console.log(event);
+    const keyPress = event.key.toLowerCase()
+
+    switch (keyPress) {
+        case 'arrowup':
+        case 'w':
+            moveUp();
+            break;
+        case 'arrowleft':
+        case 'a':
+            moveLeft();
+            break;
+        case 'arrowdown':
+        case 's':
+            moveDown();
+            break;
+        case 'arrowright':
+        case 'd':
+            moveRight();
+            break;
+        default:
+            break;
+    }
 }
 function moveUp() {
+    if ((playerPosition.y - elementSize) < elementSize) {
+        console.log('OUT'); 
+    } else 
+    playerPosition.y -= elementSize
     console.log('Arriba');
+    console.log({playerPosition});
+    startGame();   
+
 }
 function moveRight() {
-    console.log('Derecha');
+    if (playerPosition.x + elementSize < canvasSize -elementSize) {
+        playerPosition.x += elementSize
+        console.log('Derecha');
+        console.log({playerPosition});
+        startGame()   
+    }
 }
 function moveLeft() {
-    console.log('Izquierda');
+    if (playerPosition.x - elementSize >= 0) {
+        playerPosition.x -= elementSize
+        console.log('Izquierda');
+        console.log({playerPosition});
+        startGame()   
+    }else console.log('no se cumple');
 }
 function moveDown() {
-    console.log('Abajo');
+    if (playerPosition.y + elementSize < canvasSize) {
+        playerPosition.y += elementSize 
+        console.log('Abajo');
+        console.log({playerPosition,canvasSize});
+        startGame()
+    }else console.log('no se cumple');
+    
+}
+function movePlayer() {
+    ctx.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y)
+    // console.log({playerPosition});
 }
