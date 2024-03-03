@@ -89,3 +89,16 @@ maps.push(`
     XI-------X
     XXXXXXXXXX
     `);
+    maps.push(`
+    ----------
+    -XXXXXXXX-
+    -X-----XX-
+    -X-XXXIXX-
+    -X-XXXXXX-
+    -X------X-
+    -XXXXXX-X-
+    -X------X-
+    OX-XXXXXX-
+    XX--------
+    `);
+    

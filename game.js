@@ -12,8 +12,11 @@ let playerPosition = {x:undefined,y:undefined}
 let giftPostion = {x:undefined, y:undefined}
 let enemyPosition = []
 
-let level = 0
-let lives = 3
+let levelIterations = 0
+let level = getRandomLevel()
+let lives = 5
+
+const MAX_LEVEL_ITERATIONS = 12
 
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -229,7 +232,12 @@ function movePlayer() {
 }
 function levelUp() {
     console.log('level Up');
-    level ++;
+    levelIterations ++
+    if (levelIterations>= MAX_LEVEL_ITERATIONS) {
+        finish()
+        return;
+    }
+    level = getRandomLevel()
     startGame()
 }
 function levelFail() {
@@ -244,4 +252,7 @@ function levelFail() {
 }
 function finish() {
     console.log('Ganaste el juego');   
+}
+function getRandomLevel() {
+    return Math.floor(Math.random()*7)
 }
