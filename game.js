@@ -79,54 +79,7 @@ function movePlayer() {
 
 
 }
-function moveKey(event) {
-    const keyLow = event.key.toLowerCase()
 
-    switch (keyLow) {
-        case 'arrowup':
-        case 'w':
-            moveUp()
-            break;
-        case 'arrowleft':
-        case 'a':
-            moveLeft()
-            break;
-        case 'arrowdown':
-        case 's':
-            moveDown()
-            break;
-        case 'arrowright':
-        case 'd':
-            moveRight()
-            break;
-        default:
-            break;
-    }
-}
-function moveUp() {
-    if ((playerPosition.y - elementSize) >= elementSize) {
-        playerPosition.y -= elementSize
-        startGame()
-    }
-}
-function moveLeft() {
-    if ((playerPosition.x - elementSize) >= 0) {
-        playerPosition.x -= elementSize
-        startGame()
-    }
-}
-function moveDown() {
-    if ((playerPosition.y + elementSize) < canvasSize) {
-        playerPosition.y += elementSize
-        startGame()
-    }
-}
-function moveRight() {
-    if ((playerPosition.x + elementSize) < canvasSize -elementSize) {
-        playerPosition.x += elementSize
-        startGame()
-    }
-}
 function levelUp() {
     levelIteration ++
     if (levelIteration >= MAX_IT) {
