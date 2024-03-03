@@ -10,10 +10,10 @@ let canvasSize
 let elementSize
 let playerPosition = {x:undefined, y:undefined}
 let giftPosition = {x:undefined, y:undefined}
-let level = getRandom()
-let levelIteration = 0
-let MAX_IT = 12
+let enemyPosition =[]
+let level = 0
 
+let lives = 3
 // Escuchadores de eventos generales
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -50,7 +50,9 @@ function startGame() {
     ctx.font = elementSize + 'px Verdana'
     
     ctx.clearRect(0,0,canvasSize,canvasSize)
-    
+    // este array vacio limipa el array creado por la ejecucion de startGame cada que se hace un movimiento
+    enemyPosition =[]
+
     mapRows.forEach((row,rowIndex)=>{
         row.forEach((col,colIndex)=>{
             const render = emojis[col]
@@ -65,6 +67,11 @@ function startGame() {
             }else if (col == 'I') {
                 giftPosition.x = posX
                 giftPosition.y = posY
+            }else if (col == 'X') {
+                enemyPosition.push({
+                    x:posX,
+                    y:posY,
+                })
             }
         })
     })
@@ -77,6 +84,15 @@ function movePlayer() {
     const isCollision = getGiftX && getGiftY
     isCollision ? levelUp() : null
 
+    const enemyCollision = enemyPosition.find(enemy=>{
+        const collisionX = enemy.x == playerPosition.x
+        const collisionY = enemy.y == playerPosition.y
+        return collisionX && collisionY
+    })
+    if (enemyCollision) {
+        levelFail()
+        console.log({lives});
+    }
 
 }
 function moveKey(event) {
@@ -128,17 +144,24 @@ function moveRight() {
     }
 }
 function levelUp() {
-    levelIteration ++
-    if (levelIteration >= MAX_IT) {
-        level = getRandom()
-        
+    level ++ 
+    startGame()
+}
+function levelFail() {
+    lives --
+    if(lives <= 0){
+        level = 0 
+        finish()
     }
+    playerPosition.x = undefined
+    playerPosition.y = undefined
+    startGame()
 }
 
-function getRandom() {
-    return Math.floor(Math.random()*7)
-}
 
 function finish() {
-    console.log('ganaste');
+    if (lives <= 0 ) {
+        window.alert('PERDISTE')
+        lives = 3
+    }
 }

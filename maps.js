@@ -85,7 +85,7 @@ maps.push(`
     X-XXXX-X-X
     X------X-X
     XXXXXXXX-X
-    XI-------X
+    I--------X
     XXXXXXXXXX
     `);
     maps.push(`
