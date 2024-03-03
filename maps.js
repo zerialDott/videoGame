@@ -10,7 +10,7 @@ const emojis = {
     'X': '💣',
     'I': '🎁',
     'L': '🤬',
-    'PLAYER': '😻',
+    'PLAYER': '💀',
     'BOMB_COLLISION': '🔥',
     'GAME_OVER': '👎',
     'WIN': '🏆',
@@ -86,7 +86,7 @@ maps.push(`
     X-XXXX-X-X
     X------X-X
     XXXXXXXX-X
-    XI-------X
+    I--------X
     XXXXXXXXXX
     `);
     maps.push(`
