@@ -13,7 +13,13 @@ let giftPosition = {x:undefined, y:undefined}
 let enemyPosition =[]
 let level = 0
 
-let lives = 3
+let lives = 5
+let timeStart
+let timeOut
+let timeInterval
+
+const spanLives = document.getElementById('pLives')
+const spanTime = document.getElementById('pTime')
 // Escuchadores de eventos generales
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -45,13 +51,25 @@ function handleGame() {
 }
 function startGame() {
     elementSize = Math.floor((canvasSize/10))
-    
+    // si acaba de comenzar :
+
+    if (!timeStart) {
+        timeStart=Date.now()
+        timeInterval = setInterval(showTime, 100)
+    }
+    if (level >= maps.length) {
+        gameWin()
+        return
+    }
     // ctx.textAling='end'
     const generalMap = maps[level]
     const separatedMap = generalMap.trim().split('\n')
     const mapRows = separatedMap.map(a=> a.trim().split(''))
     ctx.textAlign = 'start'
     ctx.font = elementSize + 'px Verdana'
+
+    // ShowLives renderiza corazoncitos de vidas
+    showLives()
     
     ctx.clearRect(0,0,canvasSize,canvasSize)
     // este array vacio limipa el array creado por la ejecucion de startGame cada que se hace un movimiento
@@ -82,6 +100,7 @@ function startGame() {
     ctx.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y)
     movePlayer()
 }
+
 function movePlayer() {
     const getGiftX = giftPosition.x == playerPosition.x
     const getGiftY = giftPosition.y == playerPosition.y
@@ -95,10 +114,9 @@ function movePlayer() {
     })
     if (enemyCollision) {
         levelFail()
-        console.log({lives});
     }
-
 }
+
 function moveKey(event) {
     const keyLow = event.key.toLowerCase()
 
@@ -123,6 +141,7 @@ function moveKey(event) {
             break;
     }
 }
+
 function moveUp() {
     if ((playerPosition.y - elementSize) >= elementSize) {
         playerPosition.y -= elementSize
@@ -153,19 +172,37 @@ function levelUp() {
 }
 function levelFail() {
     lives --
+    
     if(lives <= 0){
         level = 0 
         finish()
+        return
     }
     playerPosition.x = undefined
     playerPosition.y = undefined
     startGame()
 }
-
-
 function finish() {
     if (lives <= 0 ) {
         window.alert('PERDISTE')
-        lives = 3
+        lives= 5
     }
+}
+function gameWin() {
+    window.alert('¡Felicidades, ganaste!')
+    clearInterval(timeInterval)
+    lives = 5
+}
+function showLives() {
+    let arrayLives = Array(lives).fill(emojis['LIVES'])
+    livesRender = ''
+
+    arrayLives.forEach(life=>{
+        livesRender += life
+    })
+    spanLives.innerHTML = livesRender
+    // spanLives.innerHTML= arrayLives.join('')
+}
+function showTime() {
+    spanTime.innerHTML= Date.now() - timeStart
 }
