@@ -34,4 +34,8 @@ localStorage.setItem('setVar','resultado de esta variable');
 let resultado = localStorage.getItem('setVar');
 console.log(resultado); // Esto imprimirá 'resultado de esta variable' en la consola.
 ```
+``` javaScript
+// Es el equivalente a presionar f5
+location.reload() 
 
+```
