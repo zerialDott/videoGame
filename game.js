@@ -18,8 +18,13 @@ let timeStart
 let timeOut
 let timeInterval
 
+let setRecord
+
+// Agregar los span para mostrar
 const spanLives = document.getElementById('pLives')
 const spanTime = document.getElementById('pTime')
+const spanRecord = document.getElementById('pRecord')
+
 // Escuchadores de eventos generales
 window.addEventListener('resize',handleGame)
 window.addEventListener('load',handleGame)
@@ -180,6 +185,7 @@ function levelFail() {
     }
     playerPosition.x = undefined
     playerPosition.y = undefined
+    clearInterval(timeInterval)
     startGame()
 }
 function finish() {
@@ -189,9 +195,26 @@ function finish() {
     }
 }
 function gameWin() {
-    window.alert('¡Felicidades, ganaste!')
     clearInterval(timeInterval)
-    lives = 5
+    lives = 6
+    level = 0
+    // window.alert('¡Felicidades, ganaste!')
+    timeInterval = 0
+    
+    const recordTime =localStorage.getItem('record_Time')
+    const playerTime = Date.now() - timeStart
+    
+    if (recordTime) {
+        if (recordTime >= playerTime) {
+            localStorage.setItem('record_Time',playerTime)
+            console.log('RECORD SUPERADO');
+        }else{
+            console.log('no se superó el record');
+        }
+    }else {
+        localStorage.setItem('record_Time',playerTime)
+    }
+    console.log({recordTime,playerTime});
 }
 function showLives() {
     let arrayLives = Array(lives).fill(emojis['LIVES'])
@@ -205,4 +228,5 @@ function showLives() {
 }
 function showTime() {
     spanTime.innerHTML= Date.now() - timeStart
+    
 }

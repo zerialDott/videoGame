@@ -19,3 +19,15 @@ se monta sobre un Array, `maps =[]` vacio al que se le empujan los valores como 
 
 ## CANVAS
 La etiqueta canvas con el `id=game` tiene todo el oleo de donde se encuentra el juego.
+
+### Bonus localStorage
+se utiliza `localStorage` con sus propiedades 
+`.setItem`; `.getItem`; `.removeItem`.
+
+`.setItem`: Guarda la variable como un metodo, pasandolo como primer argumento. El segundo argumento será el valor que se quiera guardar. 
+```` javaScript:
+localStorage.setItem('setVar','resultado de esta variable');```
+
+```JavaScript;
+.getItem`: lee la informacion que se guarda.
+`localStorage.getItem('setVar') = 'resultado de la variable'```
