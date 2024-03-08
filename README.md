@@ -26,8 +26,9 @@ se utiliza `localStorage` con sus propiedades
 
 `.setItem`: Guarda la variable como un metodo, pasandolo como primer argumento. El segundo argumento será el valor que se quiera guardar. 
 ```` javaScript:
-localStorage.setItem('setVar','resultado de esta variable');```
+localStorage.setItem('setVar','resultado de esta variable');
 
-```JavaScript;
+JavaScript;
 .getItem`: lee la informacion que se guarda.
-`localStorage.getItem('setVar') = 'resultado de la variable'```
+`localStorage.getItem('setVar') = 'resultado de la variable' 
+```
